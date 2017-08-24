@@ -1,21 +1,21 @@
 from emails import sendYaleEmail
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
+import getpass
 
 # needs to be set
 fbLink = "fb.com"
 meEmail = "lifeng.wang@yale.edu"
-
+creds = {}
 def getCreds():
-    file = open('../creds.txt', 'r')
-    # instead of a creds file - ask for credentials
-    # for testing purposes
-    credLst = file.read().split()
-    creds = {}
-    creds['user'] = credLst[0]
-    creds['pass'] = credLst[1]
+    # file = open('../creds.txt', 'r')
+    # # instead of a creds file - ask for credentials
+    # # for testing purposes
+    # credLst = file.read().split()
+    # creds = {}
+    # creds['user'] = credLst[0]
+    # creds['pass'] = credLst[1]
     return creds
-
 
 def matchAndSend():
     # list of names of the matched people in file
@@ -74,4 +74,6 @@ def final():
         sendYaleEmail("lifeng.wang@yale.edu", ','.join(pair), msg.as_string(), creds)
 
 if __name__ == '__main__':
-    print matchAndSend()
+    creds['user'] = raw_input('NetID: ')
+    creds['pass'] = getpass.getpass('Password (obfuscated): ')
+    matchAndSend()
