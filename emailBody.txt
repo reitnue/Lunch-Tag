@@ -1,0 +1,11 @@
+Hey Lunch Tagger,
+
+Your lunch tag is %s (%s), please reach out and find a time to get a meal with them.
+
+Don't forget to snap and post a post-meal selfie onto the fb event page by the end of the week for prizes.
+
+Please refer to the fb page (%s) or email me if you have any questions.
+
+Happy Tagging!
+
+Alex

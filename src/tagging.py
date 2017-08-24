@@ -2,6 +2,10 @@ from emails import sendYaleEmail
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
+# needs to be set
+fbLink = "fb.com"
+meEmail = "lifeng.wang@yale.edu"
+
 def getCreds():
     file = open('../creds.txt', 'r')
     # instead of a creds file - ask for credentials
@@ -21,19 +25,20 @@ def matchAndSend():
 
     for matchedPair in matchedPairs:
         pair = list(matchedPair)
+        pairSend(pair)
+
+def pairSend(pair):
+    body = open('../emailBody.txt', 'r')
+    strBody = str(body.read())
+    for i in range(len(pair)):
         msg = MIMEMultipart('alternative')
         msg['Subject'] = "CASA Lunch Tag"
         msg['From'] = "Lifeng Wang<lifeng.wang@yale.edu>"
-        msg['To'] = '%s<%s>, %s<%s>' % (pair[0]['name'],
-                                        pair[0]['email'],
-                                        pair[1]['name'],
-                                        pair[1]['email'])
-
-        # msg['CC'] = "bar"
-        content = "%s and %s foo bar" % (pair[0]['name'], pair[1]['name'])
-        body = MIMEText(content, "html")
+        msg['To'] = '%s<%s>' % (pair[i]['name'], pair[i]['email'])
+        content = strBody % (pair[(i+1) % 2]['name'], pair[(i+1) % 2]['email'], fbLink)
+        body = MIMEText('<br>'.join(content.split('\n')), "html")
         msg.attach(body)
-        sendYaleEmail("lifeng.wang@yale.edu", [pair[1]['email'], "lifengawang@gmail.com"], msg.as_string(), getCreds())
+        sendYaleEmail(meEmail, pair[i]['email'], msg.as_string(), getCreds())
 
 def userParser(fileName):
     peeps = []
